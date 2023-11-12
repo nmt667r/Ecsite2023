@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface UserRepository extends JpaRepository<Item, Integer> {
-    public User findById(int id);
+public interface ItemRepository extends JpaRepository<Item, Integer> {
+
+    public List<Item> findById(int id);
+    public List<Item> findAllByOrderByIdDesc();
 }
