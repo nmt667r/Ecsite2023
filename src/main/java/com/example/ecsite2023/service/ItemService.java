@@ -31,6 +31,8 @@ public class ItemService {
             Item.setPrice(result.getPrice());
             Item.setImage(result.getImage());
             Item.setStatus(result.isStatus());
+            Item.setCreateDate(result.getCreateDate());
+            Item.setUpdateDate(result.getUpdateDate());
             items.add(Item);
 
         }

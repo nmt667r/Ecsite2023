@@ -6,9 +6,12 @@
     <title>TOP</title>
 </head>
 <body>
-    <form method="post" action="/item" th:object="${itemForm}">
-        <input type="text" th:field="*{name}">
-        <input type="text" th:field="*{price}">
-        <input type="submit" value="新規追加" />
-    </form>
+<div class="header-contents">
+    <h1>商品追加画面</h1>
+</div>
+<form method="post" action="/item" th:object="${itemForm}">
+    <input type="text" th:field="*{name}">
+    <input type="text" th:field="*{price}">
+    <input type="submit" value="新規追加" />
+</form>
 </body>
