@@ -1,5 +1,6 @@
 package com.example.ecsite2023.repository;
 
+import com.example.ecsite2023.controller.form.LoginForm;
 import com.example.ecsite2023.repository.entity.Item;
 import com.example.ecsite2023.repository.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,4 +12,5 @@ import java.util.List;
 public interface UserRepository extends JpaRepository<User, Integer> {
     public User findById(int id);
     public List<User> findAll();
+    public List<User> findByAccountAndPassword(String account, String password);
 }

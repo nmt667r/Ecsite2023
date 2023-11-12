@@ -1,5 +1,8 @@
 package com.example.ecsite2023.service;
 
+import com.example.ecsite2023.controller.form.ItemForm;
+import com.example.ecsite2023.controller.form.LoginForm;
+import com.example.ecsite2023.repository.entity.Item;
 import com.example.ecsite2023.repository.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,5 +33,17 @@ public class UserService {
             users.add(user);
         }
         return users;
+    }
+
+    public List<User> findUser(LoginForm loginForm) {
+        User selectUser = setUserEntity(loginForm);
+        return userRepository.findByAccountAndPassword(selectUser.getAccount(), selectUser.getPassword());
+    }
+
+    private User setUserEntity(LoginForm loginForm) {
+        User user = new User();
+        user.setAccount(loginForm.getAccount());
+        user.setPassword(loginForm.getPassword());
+        return user;
     }
 }
