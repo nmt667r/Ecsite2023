@@ -21,7 +21,7 @@ public class ItemService {
     }
 
     private List<ItemForm> setItemForm(List<Item> results) {
-        List<ItemForm> reports = new ArrayList<>();
+        List<ItemForm> items = new ArrayList<>();
 
         for (int i = 0; i < results.size(); i++) {
             ItemForm Item = new ItemForm();
@@ -31,9 +31,26 @@ public class ItemService {
             Item.setPrice(result.getPrice());
             Item.setImage(result.getImage());
             Item.setStatus(result.isStatus());
-            reports.add(Item);
+            items.add(Item);
 
         }
-        return reports;
+        return items;
+    }
+
+    public void saveItem(ItemForm itemForm) {
+        Item saveItem = setItemEntity(itemForm);
+        itemRepository.save(saveItem);
+    }
+
+    private Item setItemEntity(ItemForm itemForm) {
+        Item item = new Item();
+        item.setId(itemForm.getId());
+        item.setName(itemForm.getName());
+        item.setPrice(itemForm.getPrice());
+        item.setImage(itemForm.getImage());
+        item.setStatus(itemForm.isStatus());
+        item.setCreateDate(itemForm.getCreateDate());
+        item.setUpdateDate(itemForm.getUpdateDate());
+        return item;
     }
 }
