@@ -2,7 +2,6 @@ package com.example.ecsite2023.controller;
 
 import com.example.ecsite2023.controller.form.ItemForm;
 import com.example.ecsite2023.controller.form.LoginForm;
-import com.example.ecsite2023.repository.ItemRepository;
 import com.example.ecsite2023.repository.entity.User;
 import com.example.ecsite2023.service.ItemService;
 import com.example.ecsite2023.service.UserService;
@@ -65,7 +64,7 @@ public class TopController {
         return mav;
     }
     @PostMapping("/login")
-    public ModelAndView excuteLogin(@ModelAttribute("loginForm") LoginForm loginForm, BindingResult result) {
+    public ModelAndView executeLogin(@ModelAttribute("loginForm") LoginForm loginForm, BindingResult result) {
         ModelAndView mav = new ModelAndView();
         List<User> findUsers = userService.findUser(loginForm);
         if(findUsers.size() != 1){
