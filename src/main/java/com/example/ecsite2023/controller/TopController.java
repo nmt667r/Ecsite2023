@@ -2,6 +2,7 @@ package com.example.ecsite2023.controller;
 
 import com.example.ecsite2023.controller.form.ItemForm;
 import com.example.ecsite2023.controller.form.LoginForm;
+import com.example.ecsite2023.controller.form.SignupForm;
 import com.example.ecsite2023.repository.entity.User;
 import com.example.ecsite2023.service.ItemService;
 import com.example.ecsite2023.service.UserService;
@@ -49,9 +50,7 @@ public class TopController {
         ModelAndView mav = new ModelAndView();
         itemForm.setCreateDate(new Date());
         itemForm.setUpdateDate(new Date());
-        // 投稿をテーブルに格納
         itemService.saveItem(itemForm);
-        // rootへリダイレクト
         return new ModelAndView("redirect:/");
     }
 
@@ -72,7 +71,25 @@ public class TopController {
             mav.setViewName("/login");
             return mav;
         }
-        //session.setAttribute("loginUser", findUsers.get(0));
+        session.setAttribute("loginUser", findUsers.get(0));
+        return new ModelAndView("redirect:/");
+    }
+
+    @GetMapping("/signup")
+    public ModelAndView viewSignup() {
+        ModelAndView mav = new ModelAndView();
+        SignupForm signupForm = new SignupForm();
+        mav.addObject("signupForm", signupForm);
+        mav.setViewName("/signup");
+        return mav;
+    }
+
+    @PostMapping("/signup")
+    public ModelAndView executeLogin(@ModelAttribute("signupForm") SignupForm signupForm, BindingResult result) {
+        ModelAndView mav = new ModelAndView();
+        signupForm.setCreateDate(new Date());
+        signupForm.setUpdateDate(new Date());
+        userService.createUser(signupForm);
         return new ModelAndView("redirect:/");
     }
 }
