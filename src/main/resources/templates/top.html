@@ -6,32 +6,40 @@
     <title>TOP</title>
 </head>
 <body>
-<div class="header-contents">
-    <h1>トップ画面</h1>
-</div>
-
-<table>
-    <thead>
-        <tr>
-            <th>id</th>
-            <th>name</th>
-            <th>price</th>
-            <th>image</th>
-            <th>status</th>
-            <th>createDate</th>
-            <th>updateDate</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr th:each="item : ${items}" th:object="${items}">
-            <td th:text="${item.id}"></td>
-            <td th:text="${item.name}"></td>
-            <td th:text="${item.price}"></td>
-            <td th:text="${item.image}"></td>
-            <td th:text="${item.status}"></td>
-            <td th:text="${item.createDate}"></td>
-            <td th:text="${item.updateDate}"></td>
-        </tr>
-    </tbody>
-</table>
+<header>
+    <div class="page-title">
+        <h1>トップ画面</h1>
+    </div>
+    <div class="navi">
+        <span><a href="/">トップ</a></span>
+        <span><a href="login">ログイン</a></span>
+        <span><a href="item">商品追加</a></span>
+    </div>
+</header>
+<main>
+    <table>
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>name</th>
+                <th>price</th>
+                <th>image</th>
+                <th>status</th>
+                <th>createDate</th>
+                <th>updateDate</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="item : ${items}" th:object="${items}">
+                <td th:text="${item.id}"></td>
+                <td th:text="${item.name}"></td>
+                <td th:text="${item.price}"></td>
+                <td th:text="${item.image}"></td>
+                <td th:text="${item.status}"></td>
+                <td th:text="${item.createDate}"></td>
+                <td th:text="${item.updateDate}"></td>
+            </tr>
+        </tbody>
+    </table>
+</main>
 </body>

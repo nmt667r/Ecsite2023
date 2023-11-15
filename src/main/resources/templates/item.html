@@ -6,12 +6,21 @@
     <title>TOP</title>
 </head>
 <body>
-<div class="header-contents">
-    <h1>商品追加画面</h1>
-</div>
-<form method="post" action="/item" th:object="${itemForm}">
-    <input type="text" th:field="*{name}">
-    <input type="text" th:field="*{price}">
-    <input type="submit" value="新規追加" />
-</form>
+<header>
+    <div class="page-title">
+        <h1>商品追加画面</h1>
+    </div>
+    <div class="navi">
+        <span><a href="/">トップ</a></span>
+        <span><a href="login">ログイン</a></span>
+        <span><a href="item">商品追加</a></span>
+    </div>
+</header>
+<main>
+    <form method="post" action="/item" th:object="${itemForm}">
+        <input type="text" th:field="*{name}">
+        <input type="text" th:field="*{price}">
+        <input type="submit" value="新規追加" />
+    </form>
+</main>
 </body>
