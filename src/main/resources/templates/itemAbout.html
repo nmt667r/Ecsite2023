@@ -8,7 +8,7 @@
 <body>
 <header>
     <div class="page-title">
-        <h1>ログイン画面</h1>
+        <h1>商品詳細画面</h1>
     </div>
     <div class="navi">
         <span><a href="/">トップ</a></span>
@@ -18,10 +18,10 @@
     </div>
 </header>
 <main>
-    <form method="post" action="/login" th:object="${loginForm}">
-        <input type="text" th:field="*{account}">
-        <input type="text" th:field="*{password}">
-        <input type="submit" value="ログイン" />
+    <form method="post" action="/item" th:object="${itemForm}">
+        <input type="text" th:field="*{name}">
+        <input type="text" th:field="*{price}">
+        <input type="submit" value="新規追加" />
     </form>
 </main>
 </body>

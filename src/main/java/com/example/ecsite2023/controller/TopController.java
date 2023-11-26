@@ -36,16 +36,16 @@ public class TopController {
         return mav;
     }
 
-    @GetMapping("/item")
+    @GetMapping("/itemAdd")
     public ModelAndView viewItem() {
         ModelAndView mav = new ModelAndView();
         ItemForm itemForm = new ItemForm();
         mav.addObject("itemForm", itemForm);
-        mav.setViewName("/item");
+        mav.setViewName("/itemAdd");
         return mav;
     }
 
-    @PostMapping("/item")
+    @PostMapping("/itemAdd")
     public ModelAndView addItem(@ModelAttribute("itemForm") ItemForm itemForm, BindingResult result) {
         ModelAndView mav = new ModelAndView();
         itemForm.setCreateDate(new Date());
