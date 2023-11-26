@@ -75,6 +75,14 @@ public class TopController {
         return new ModelAndView("redirect:/");
     }
 
+    @GetMapping("/logout")
+    public ModelAndView executeOut(){
+        session.invalidate();
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("/top");
+        return mav;
+    }
+
     @GetMapping("/signup")
     public ModelAndView viewSignup() {
         ModelAndView mav = new ModelAndView();
