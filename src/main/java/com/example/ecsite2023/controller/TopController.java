@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -52,6 +53,15 @@ public class TopController {
         itemForm.setUpdateDate(new Date());
         itemService.saveItem(itemForm);
         return new ModelAndView("redirect:/");
+    }
+
+    @GetMapping("/item/{id}")
+    public ModelAndView viewItemAbout(@PathVariable Integer id) {
+        ModelAndView mav = new ModelAndView();
+        ItemForm item = itemService.findByItem(id).get(0);
+        mav.addObject("itemForm", item);
+        mav.setViewName("/itemAbout");
+        return mav;
     }
 
     @GetMapping("/login")

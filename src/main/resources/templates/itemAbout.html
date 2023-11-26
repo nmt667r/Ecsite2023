@@ -18,9 +18,11 @@
     </div>
 </header>
 <main>
-    <form method="post" action="/item" th:object="${itemForm}">
-        <input type="text" th:field="*{name}">
-        <input type="text" th:field="*{price}">
+    <form method="post" action="/cartAdd" th:object="${itemForm}">
+        <span th:text="*{name}"></span>
+        <span th:text="*{price}"></span>
+        <input type="text" name="amount" value="1">
+        <input type="hidden" name="id" th:value="*{id}">
         <input type="submit" value="新規追加" />
     </form>
 </main>

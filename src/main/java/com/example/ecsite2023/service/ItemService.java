@@ -20,6 +20,11 @@ public class ItemService {
         return setItemForm(results);
     }
 
+    public List<ItemForm> findByItem(Integer id) {
+        List<Item> results = itemRepository.findById(id.intValue());
+        return setItemForm(results);
+    }
+
     private List<ItemForm> setItemForm(List<Item> results) {
         List<ItemForm> items = new ArrayList<>();
 

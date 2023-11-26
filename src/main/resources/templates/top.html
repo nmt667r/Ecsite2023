@@ -32,7 +32,7 @@
         </thead>
         <tbody>
             <tr th:each="item : ${items}" th:object="${items}">
-                <td th:text="${item.id}"></td>
+                <td><a th:href="@{/item/{id}(id=${item.id})}"><span th:text="${item.id}"></span></a></td>
                 <td th:text="${item.name}"></td>
                 <td th:text="${item.price}"></td>
                 <td th:text="${item.image}"></td>
