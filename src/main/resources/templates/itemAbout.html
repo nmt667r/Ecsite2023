@@ -18,7 +18,7 @@
     </div>
 </header>
 <main>
-    <form method="post" action="/cartAdd" th:object="${itemForm}">
+    <form method="post" action="/addCart" th:object="${itemForm}">
         <span th:text="*{name}"></span>
         <span th:text="*{price}"></span>
         <input type="text" name="amount" value="1">

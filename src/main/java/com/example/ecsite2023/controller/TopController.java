@@ -4,6 +4,7 @@ import com.example.ecsite2023.controller.form.ItemForm;
 import com.example.ecsite2023.controller.form.LoginForm;
 import com.example.ecsite2023.controller.form.SignupForm;
 import com.example.ecsite2023.repository.entity.User;
+import com.example.ecsite2023.service.CartService;
 import com.example.ecsite2023.service.ItemService;
 import com.example.ecsite2023.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,8 @@ public class TopController {
     ItemService itemService;
     @Autowired
     UserService userService;
+    @Autowired
+    CartService cartService;
     @Autowired
     HttpSession session;
 
@@ -110,4 +113,14 @@ public class TopController {
         userService.createUser(signupForm);
         return new ModelAndView("redirect:/");
     }
+
+    @PostMapping("/addCart")
+    public ModelAndView executeAddCart(@ModelAttribute("itemForm") ItemForm itemForm, BindingResult result) {
+        ModelAndView mav = new ModelAndView();
+        itemForm.setCreateDate(new Date());
+        itemForm.setUpdateDate(new Date());
+        cartService.addItem(itemForm);
+        return new ModelAndView("redirect:/");
+    }
+
 }
