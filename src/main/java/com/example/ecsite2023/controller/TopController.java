@@ -1,5 +1,6 @@
 package com.example.ecsite2023.controller;
 
+import com.example.ecsite2023.controller.form.CartForm;
 import com.example.ecsite2023.controller.form.ItemForm;
 import com.example.ecsite2023.controller.form.LoginForm;
 import com.example.ecsite2023.controller.form.SignupForm;
@@ -10,10 +11,7 @@ import com.example.ecsite2023.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
@@ -61,8 +59,12 @@ public class TopController {
     @GetMapping("/item/{id}")
     public ModelAndView viewItemAbout(@PathVariable Integer id) {
         ModelAndView mav = new ModelAndView();
-        ItemForm item = itemService.findByItem(id).get(0);
-        mav.addObject("itemForm", item);
+        ItemForm itemForm = itemService.findByItem(id).get(0);
+        CartForm cartForm = new CartForm();
+        cartForm.setItemId(itemForm.getId());
+        cartForm.setName(itemForm.getName());
+        cartForm.setPrice(itemForm.getPrice());
+        mav.addObject("cartForm", cartForm);
         mav.setViewName("/itemAbout");
         return mav;
     }
@@ -115,11 +117,11 @@ public class TopController {
     }
 
     @PostMapping("/addCart")
-    public ModelAndView executeAddCart(@ModelAttribute("itemForm") ItemForm itemForm, BindingResult result) {
+    public ModelAndView executeAddCart(@ModelAttribute("cartForm") CartForm cartForm, BindingResult result, @RequestParam Integer amount) {
         ModelAndView mav = new ModelAndView();
-        itemForm.setCreateDate(new Date());
-        itemForm.setUpdateDate(new Date());
-        cartService.addItem(itemForm);
+        User user = (User) session.getAttribute("loginUser");
+        cartForm.setUserId(user.getId());
+        cartService.addItem(cartForm);
         return new ModelAndView("redirect:/");
     }
 

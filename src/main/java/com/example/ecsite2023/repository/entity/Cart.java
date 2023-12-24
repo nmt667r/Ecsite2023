@@ -19,6 +19,9 @@ public class Cart {
     @Column(name = "item_id")
     private int itemId;
 
+    @Column(name = "user_id")
+    private int userId;
+
     @Column
     private int amount;
 
