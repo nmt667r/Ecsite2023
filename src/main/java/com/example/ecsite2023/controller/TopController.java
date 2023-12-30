@@ -4,7 +4,6 @@ import com.example.ecsite2023.controller.form.CartForm;
 import com.example.ecsite2023.controller.form.ItemForm;
 import com.example.ecsite2023.controller.form.LoginForm;
 import com.example.ecsite2023.controller.form.SignupForm;
-import com.example.ecsite2023.repository.entity.Cart;
 import com.example.ecsite2023.repository.entity.User;
 import com.example.ecsite2023.service.CartService;
 import com.example.ecsite2023.service.ItemService;
@@ -122,16 +121,26 @@ public class TopController {
         ModelAndView mav = new ModelAndView();
         User user = (User) session.getAttribute("loginUser");
         cartForm.setUserId(user.getId());
-        cartService.addItem(cartForm);
+        cartService.saveItem(cartForm);
         return new ModelAndView("redirect:/");
     }
-    @GetMapping("/editCart")public ModelAndView viewCart() {
+    @GetMapping("/editCart")
+    public ModelAndView viewCart() {
         ModelAndView mav = new ModelAndView();
         User user = (User) session.getAttribute("loginUser");
-        CartForm cartForm = cartService.findByCart(user.getId());
+        List<CartForm> cartForm = cartService.findByCart(user.getId());
         mav.addObject("cartForm", cartForm);
         mav.setViewName("/cart");
         return mav;
     }
 
+    @PostMapping("/editCart")
+    public ModelAndView executeEditCart(@ModelAttribute("cartForm") CartForm cartForm) {
+        ModelAndView mav = new ModelAndView();
+        cartForm.setUpdateDate(new Date());
+        User user = (User) session.getAttribute("loginUser");
+        cartForm.setUserId(user.getId());
+        cartService.saveItem(cartForm);
+        return new ModelAndView("redirect:/");
+    }
 }

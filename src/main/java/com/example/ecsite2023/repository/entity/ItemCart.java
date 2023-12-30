@@ -10,7 +10,7 @@ import java.util.Date;
 @Getter
 @Setter
 @Table(name = "carts")
-public class Cart {
+public class ItemCart {
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,6 +24,12 @@ public class Cart {
 
     @Column
     private int amount;
+
+    @Column
+    private String name;
+
+    @Column
+    private int price;
 
     @Column(updatable = false, name = "created_date")
     private Date createDate;

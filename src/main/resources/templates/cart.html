@@ -15,16 +15,19 @@
         <span><a href="login">ログイン</a></span>
         <span><a href="itemAdd">商品追加</a></span>
         <span><a href="logout">ログアウト</a></span>
+        <span><a href="editCart">カート編集</a></span>
     </div>
 </header>
 <main>
     <tr th:each="item : ${cartForm}" th:object="${cartForm}">
         <form method="post" action="/editCart">
-            <span th:text="*{name}"></span>
-            <span th:text="*{price}"></span>
-            <input type="hidden" th:field="*{itemId}">
-            <input type="text" th:field="*{amount}">
+            <span th:text="${item.name}"></span>
+            <span th:text="${item.price}"></span>
+            <input type="hidden" th:name="id"  th:value="${item.id}">
+            <input type="hidden" th:name="itemId"  th:value="${item.itemId}">
+            <input type="text" th:name="amount" th:value="${item.amount}">
             <input type="submit" value="個数変更" />
         </form>
+    </tr>
 </main>
 </body>
