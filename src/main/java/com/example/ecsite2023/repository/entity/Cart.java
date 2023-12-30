@@ -24,6 +24,11 @@ public class Cart {
 
     @Column
     private int amount;
+    @Column
+    private String name;
+
+    @Column
+    private int price;
 
     @Column(updatable = false, name = "created_date")
     private Date createDate;
