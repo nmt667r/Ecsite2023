@@ -2,8 +2,7 @@ package com.example.ecsite2023.controller;
 
 import com.example.ecsite2023.controller.form.CartForm;
 import com.example.ecsite2023.controller.form.ItemForm;
-import com.example.ecsite2023.controller.form.LoginForm;
-import com.example.ecsite2023.controller.form.SignupForm;
+import com.example.ecsite2023.controller.form.UserForm;
 import com.example.ecsite2023.repository.entity.User;
 import com.example.ecsite2023.service.CartService;
 import com.example.ecsite2023.service.ItemService;
@@ -27,7 +26,7 @@ public class TopController {
     private final HttpSession session;
 
     @GetMapping
-    public ModelAndView top() {
+    public ModelAndView viewTop() {
         ModelAndView mav = new ModelAndView();
         List<ItemForm> items = itemService.findAllItems();
         mav.addObject("items", items);
@@ -53,9 +52,9 @@ public class TopController {
     }
 
     @GetMapping("/item/{id}")
-    public ModelAndView viewItemAbout(@PathVariable Integer id) {
+    public ModelAndView viewItemDetail(@PathVariable Integer id) {
         ModelAndView mav = new ModelAndView();
-        ItemForm itemForm = itemService.findByItem(id).get(0);
+        ItemForm itemForm = itemService.findItemById(id).get(0);
         CartForm cartForm = new CartForm();
         cartForm.setItemId(itemForm.getId());
         cartForm.setName(itemForm.getName());
@@ -68,18 +67,18 @@ public class TopController {
     @GetMapping("/login")
     public ModelAndView viewLogin() {
         ModelAndView mav = new ModelAndView();
-        LoginForm loginForm = new LoginForm();
-        mav.addObject("loginForm", loginForm);
+        UserForm userForm = new UserForm();
+        mav.addObject("userForm", userForm);
         mav.setViewName("/login");
         return mav;
     }
 
     @PostMapping("/login")
-    public ModelAndView executeLogin(@ModelAttribute("loginForm") LoginForm loginForm, BindingResult result) {
+    public ModelAndView executeLogin(@ModelAttribute("UserForm") UserForm userForm, BindingResult result) {
         ModelAndView mav = new ModelAndView();
-        List<User> findUsers = userService.findUser(loginForm);
+        List<User> findUsers = userService.findUser(userForm);
         if (findUsers.size() != 1) {
-            mav.addObject("loginForm", loginForm);
+            mav.addObject("userForm", userForm);
             mav.setViewName("/login");
             return mav;
         }
@@ -88,27 +87,25 @@ public class TopController {
     }
 
     @GetMapping("/logout")
-    public ModelAndView executeOut() {
+    public ModelAndView Logout() {
         session.invalidate();
-        ModelAndView mav = new ModelAndView();
-        mav.setViewName("/top");
-        return mav;
+        return new ModelAndView("redirect:/");
     }
 
     @GetMapping("/signup")
     public ModelAndView viewSignup() {
         ModelAndView mav = new ModelAndView();
-        SignupForm signupForm = new SignupForm();
-        mav.addObject("signupForm", signupForm);
+        UserForm userForm = new UserForm();
+        mav.addObject("userForm", userForm);
         mav.setViewName("/signup");
         return mav;
     }
 
     @PostMapping("/signup")
-    public ModelAndView executeLogin(@ModelAttribute("signupForm") SignupForm signupForm, BindingResult result) {
-        signupForm.setCreateDate(new Date());
-        signupForm.setUpdateDate(new Date());
-        userService.createUser(signupForm);
+    public ModelAndView executeSignup(@ModelAttribute("UserForm") UserForm UserForm, BindingResult result) {
+        UserForm.setCreateDate(new Date());
+        UserForm.setUpdateDate(new Date());
+        userService.createUser(UserForm);
         return new ModelAndView("redirect:/");
     }
 
@@ -124,7 +121,7 @@ public class TopController {
     public ModelAndView viewCart() {
         ModelAndView mav = new ModelAndView();
         User user = (User) session.getAttribute("loginUser");
-        List<CartForm> cartForm = cartService.findByCart(user.getId());
+        List<CartForm> cartForm = cartService.findCartByUserId(user.getId());
         mav.addObject("cartForm", cartForm);
         mav.setViewName("/cart");
         return mav;

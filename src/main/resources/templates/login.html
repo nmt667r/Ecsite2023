@@ -18,7 +18,7 @@
     </div>
 </header>
 <main>
-    <form method="post" action="/login" th:object="${loginForm}">
+    <form method="post" action="/login" th:object="${userForm}">
         <input type="text" th:field="*{account}">
         <input type="text" th:field="*{password}">
         <input type="submit" value="ログイン" />

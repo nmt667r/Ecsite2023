@@ -1,11 +1,9 @@
 package com.example.ecsite2023.service;
 
-import com.example.ecsite2023.controller.form.LoginForm;
-import com.example.ecsite2023.controller.form.SignupForm;
+import com.example.ecsite2023.controller.form.UserForm;
 import com.example.ecsite2023.repository.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.example.ecsite2023.controller.form.UserForm;
 import com.example.ecsite2023.repository.UserRepository;
 
 import java.util.ArrayList;
@@ -34,30 +32,23 @@ public class UserService {
         return users;
     }
 
-    public List<User> findUser(LoginForm loginForm) {
-        User selectUser = setSelectUserEntity(loginForm);
+    public List<User> findUser(UserForm userForm) {
+        User selectUser = setUserEntity(userForm);
         return userRepository.findByAccountAndPassword(selectUser.getAccount(), selectUser.getPassword());
     }
 
-    private User setSelectUserEntity(LoginForm loginForm) {
-        User user = new User();
-        user.setAccount(loginForm.getAccount());
-        user.setPassword(loginForm.getPassword());
-        return user;
-    }
-
-    public void createUser(SignupForm signupForm) {
-        User createUser = setInsertUserEntity(signupForm);
+    public void createUser(UserForm UserForm) {
+        User createUser = setUserEntity(UserForm);
         userRepository.save(createUser);
     }
 
-    private User setInsertUserEntity(SignupForm signupForm) {
+    private User setUserEntity(UserForm UserForm) {
         User user = new User();
-        user.setAccount(signupForm.getAccount());
-        user.setName(signupForm.getName());
-        user.setPassword(signupForm.getPassword());
-        user.setCreateDate(signupForm.getCreateDate());
-        user.setUpdateDate(signupForm.getUpdateDate());
+        user.setAccount(UserForm.getAccount());
+        user.setName(UserForm.getName());
+        user.setPassword(UserForm.getPassword());
+        user.setCreateDate(UserForm.getCreateDate());
+        user.setUpdateDate(UserForm.getUpdateDate());
         return user;
     }
 }

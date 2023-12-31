@@ -6,9 +6,7 @@ import com.example.ecsite2023.repository.entity.Item;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.Column;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -20,7 +18,7 @@ public class ItemService {
         return setItemForm(results);
     }
 
-    public List<ItemForm> findByItem(Integer id) {
+    public List<ItemForm> findItemById(Integer id) {
         List<Item> results = itemRepository.findById(id.intValue());
         return setItemForm(results);
     }

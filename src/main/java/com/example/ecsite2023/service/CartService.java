@@ -34,7 +34,7 @@ public class CartService {
         return cart;
     }
 
-    public List<CartForm> findByCart(Integer userId) {
+    public List<CartForm> findCartByUserId(Integer userId) {
         List<ItemCart> results = itemCartRepository.findByUserId(userId);
         return setCartForm(results);
     }
