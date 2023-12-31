@@ -59,4 +59,7 @@ public class CartService {
     public void deleteItem(Integer id){
         cartRepository.deleteById(id);
     }
+    public void deleteAllItem(Integer userId){
+        cartRepository.deleteByUserId(userId);
+    }
 }

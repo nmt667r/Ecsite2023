@@ -149,4 +149,12 @@ public class TopController {
         cartService.deleteItem(id);
         return new ModelAndView("redirect:/");
     }
+    @PostMapping("/purchase")
+    public ModelAndView executePurchase(){
+        ModelAndView mav = new ModelAndView();
+        User user = (User) session.getAttribute("loginUser");
+        cartService.deleteAllItem(user.getId());
+        return new ModelAndView("redirect:/");
+    }
+
 }
