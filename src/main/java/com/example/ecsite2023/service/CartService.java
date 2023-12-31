@@ -55,4 +55,8 @@ public class CartService {
         }
         return carts;
     }
+
+    public void deleteItem(Integer id){
+        cartRepository.deleteById(id);
+    }
 }

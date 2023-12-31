@@ -28,6 +28,10 @@
             <input type="text" th:name="amount" th:value="${item.amount}">
             <input type="submit" value="個数変更" />
         </form>
+        <form method="post" action="/deleteCart">
+            <input type="hidden" name="id"  th:value="${item.id}">
+            <input type="submit" value="アイテム削除" />
+        </form>
     </tr>
 </main>
 </body>

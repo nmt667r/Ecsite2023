@@ -143,4 +143,10 @@ public class TopController {
         cartService.saveItem(cartForm);
         return new ModelAndView("redirect:/");
     }
+    @PostMapping("/deleteCart")
+    public ModelAndView executeDeleteCart(@RequestParam Integer id) {
+        ModelAndView mav = new ModelAndView();
+        cartService.deleteItem(id);
+        return new ModelAndView("redirect:/");
+    }
 }
