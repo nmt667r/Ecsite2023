@@ -8,6 +8,7 @@ import com.example.ecsite2023.repository.entity.User;
 import com.example.ecsite2023.service.CartService;
 import com.example.ecsite2023.service.ItemService;
 import com.example.ecsite2023.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -19,15 +20,12 @@ import java.util.Date;
 import java.util.List;
 
 @Controller
+@RequiredArgsConstructor
 public class TopController {
-    @Autowired
-    ItemService itemService;
-    @Autowired
-    UserService userService;
-    @Autowired
-    CartService cartService;
-    @Autowired
-    HttpSession session;
+    private final ItemService itemService;
+    private final UserService userService;
+    private final CartService cartService;
+    private final HttpSession session;
 
     @GetMapping
     public ModelAndView top() {
@@ -77,11 +75,12 @@ public class TopController {
         mav.setViewName("/login");
         return mav;
     }
+
     @PostMapping("/login")
     public ModelAndView executeLogin(@ModelAttribute("loginForm") LoginForm loginForm, BindingResult result) {
         ModelAndView mav = new ModelAndView();
         List<User> findUsers = userService.findUser(loginForm);
-        if(findUsers.size() != 1){
+        if (findUsers.size() != 1) {
             mav.addObject("loginForm", loginForm);
             mav.setViewName("/login");
             return mav;
@@ -91,7 +90,7 @@ public class TopController {
     }
 
     @GetMapping("/logout")
-    public ModelAndView executeOut(){
+    public ModelAndView executeOut() {
         session.invalidate();
         ModelAndView mav = new ModelAndView();
         mav.setViewName("/top");
@@ -124,6 +123,7 @@ public class TopController {
         cartService.saveItem(cartForm);
         return new ModelAndView("redirect:/");
     }
+
     @GetMapping("/editCart")
     public ModelAndView viewCart() {
         ModelAndView mav = new ModelAndView();
@@ -143,14 +143,16 @@ public class TopController {
         cartService.saveItem(cartForm);
         return new ModelAndView("redirect:/");
     }
+
     @PostMapping("/deleteCart")
     public ModelAndView executeDeleteCart(@RequestParam Integer id) {
         ModelAndView mav = new ModelAndView();
         cartService.deleteItem(id);
         return new ModelAndView("redirect:/");
     }
+
     @PostMapping("/purchase")
-    public ModelAndView executePurchase(){
+    public ModelAndView executePurchase() {
         ModelAndView mav = new ModelAndView();
         User user = (User) session.getAttribute("loginUser");
         cartService.deleteAllItem(user.getId());
