@@ -9,7 +9,6 @@ import com.example.ecsite2023.service.CartService;
 import com.example.ecsite2023.service.ItemService;
 import com.example.ecsite2023.service.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -47,7 +46,6 @@ public class TopController {
 
     @PostMapping("/itemAdd")
     public ModelAndView addItem(@ModelAttribute("itemForm") ItemForm itemForm, BindingResult result) {
-        ModelAndView mav = new ModelAndView();
         itemForm.setCreateDate(new Date());
         itemForm.setUpdateDate(new Date());
         itemService.saveItem(itemForm);
@@ -108,7 +106,6 @@ public class TopController {
 
     @PostMapping("/signup")
     public ModelAndView executeLogin(@ModelAttribute("signupForm") SignupForm signupForm, BindingResult result) {
-        ModelAndView mav = new ModelAndView();
         signupForm.setCreateDate(new Date());
         signupForm.setUpdateDate(new Date());
         userService.createUser(signupForm);
@@ -117,7 +114,6 @@ public class TopController {
 
     @PostMapping("/addCart")
     public ModelAndView executeAddCart(@ModelAttribute("cartForm") CartForm cartForm, BindingResult result, @RequestParam Integer amount) {
-        ModelAndView mav = new ModelAndView();
         User user = (User) session.getAttribute("loginUser");
         cartForm.setUserId(user.getId());
         cartService.saveItem(cartForm);
@@ -136,7 +132,6 @@ public class TopController {
 
     @PostMapping("/editCart")
     public ModelAndView executeEditCart(@ModelAttribute("cartForm") CartForm cartForm) {
-        ModelAndView mav = new ModelAndView();
         cartForm.setUpdateDate(new Date());
         User user = (User) session.getAttribute("loginUser");
         cartForm.setUserId(user.getId());
@@ -146,14 +141,12 @@ public class TopController {
 
     @PostMapping("/deleteCart")
     public ModelAndView executeDeleteCart(@RequestParam Integer id) {
-        ModelAndView mav = new ModelAndView();
         cartService.deleteItem(id);
         return new ModelAndView("redirect:/");
     }
 
     @PostMapping("/purchase")
     public ModelAndView executePurchase() {
-        ModelAndView mav = new ModelAndView();
         User user = (User) session.getAttribute("loginUser");
         cartService.deleteAllItem(user.getId());
         return new ModelAndView("redirect:/");
