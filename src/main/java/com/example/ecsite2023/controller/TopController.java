@@ -111,8 +111,8 @@ public class TopController {
 
     @PostMapping("/addCart")
     public ModelAndView executeAddCart(@ModelAttribute("cartForm") CartForm cartForm, BindingResult result, @RequestParam Integer amount) {
-        User user = (User) session.getAttribute("loginUser");
-        cartForm.setUserId(user.getId());
+        Integer userId = ((User) session.getAttribute("loginUser")).getId();
+        cartForm.setUserId(userId);
         cartService.saveItem(cartForm);
         return new ModelAndView("redirect:/");
     }
@@ -120,8 +120,8 @@ public class TopController {
     @GetMapping("/editCart")
     public ModelAndView viewCart() {
         ModelAndView mav = new ModelAndView();
-        User user = (User) session.getAttribute("loginUser");
-        List<CartForm> cartForm = cartService.findCartByUserId(user.getId());
+        Integer userId = ((User) session.getAttribute("loginUser")).getId();
+        List<CartForm> cartForm = cartService.findCartByUserId(userId);
         mav.addObject("cartForm", cartForm);
         mav.setViewName("/cart");
         return mav;
@@ -130,8 +130,8 @@ public class TopController {
     @PostMapping("/editCart")
     public ModelAndView executeEditCart(@ModelAttribute("cartForm") CartForm cartForm) {
         cartForm.setUpdateDate(new Date());
-        User user = (User) session.getAttribute("loginUser");
-        cartForm.setUserId(user.getId());
+        Integer userId = ((User) session.getAttribute("loginUser")).getId();
+        cartForm.setUserId(userId);
         cartService.saveItem(cartForm);
         return new ModelAndView("redirect:/");
     }
@@ -144,8 +144,8 @@ public class TopController {
 
     @PostMapping("/purchase")
     public ModelAndView executePurchase() {
-        User user = (User) session.getAttribute("loginUser");
-        cartService.deleteAllItem(user.getId());
+        Integer userId = ((User) session.getAttribute("loginUser")).getId();
+        cartService.deleteAllItem(userId);
         return new ModelAndView("redirect:/");
     }
 

@@ -11,12 +11,12 @@ import java.util.Date;
 @Getter
 @Setter
 public class CartForm {
-    private int id;
-    private int itemId;
-    private int userId;
-    private int amount;
+    private Integer id;
+    private Integer itemId;
+    private Integer userId;
+    private Integer amount;
     private String name;
-    private int price;
+    private Integer price;
     private Date createDate;
     private Date updateDate;
 }
