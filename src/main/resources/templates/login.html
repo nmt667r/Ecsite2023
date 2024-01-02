@@ -24,10 +24,21 @@
     </div>
 </header>
 <main>
-    <form method="post" action="/login" th:object="${userForm}">
-        <input type="text" th:field="*{account}">
-        <input type="text" th:field="*{password}">
-        <input type="submit" value="ログイン" />
+    <form method="post" action="/login" th:object="${UserForm}">
+        <div>
+            <span>アカウント名</span>
+            <div th:if="${#fields.hasErrors('account')}" th:errors="*{account}"></div>
+            <input type="text" th:field="*{account}">
+        </div>
+        <div>
+            <span>パスワード</span>
+            <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+            <input type="password" th:field="*{password}">
+        </div>
+        <div>
+            <input type="submit" value="ログイン" />
+        </div>
+
     </form>
 </main>
 </body>

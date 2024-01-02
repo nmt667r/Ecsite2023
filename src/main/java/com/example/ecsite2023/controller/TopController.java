@@ -73,17 +73,23 @@ public class TopController {
         ModelAndView mav = new ModelAndView();
         mav.addObject("loginUser",session.getAttribute("loginUser"));
         UserForm userForm = new UserForm();
-        mav.addObject("userForm", userForm);
+        mav.addObject("UserForm", userForm);
         mav.setViewName("/login");
         return mav;
     }
 
     @PostMapping("/login")
-    public ModelAndView executeLogin(@ModelAttribute("UserForm") UserForm userForm, BindingResult result) {
+    public ModelAndView executeLogin(@ModelAttribute("UserForm") @Validated UserForm userForm, BindingResult result) {
         ModelAndView mav = new ModelAndView();
+        if (result.hasErrors()) {
+            mav.addObject("loginUser",session.getAttribute("loginUser"));
+            mav.addObject("UserForm", userForm);
+            mav.setViewName("/login");
+            return mav;
+        }
         List<User> findUsers = userService.findUser(userForm);
         if (findUsers.size() != 1) {
-            mav.addObject("userForm", userForm);
+            mav.addObject("UserForm", userForm);
             mav.setViewName("/login");
             return mav;
         }
@@ -102,7 +108,7 @@ public class TopController {
         ModelAndView mav = new ModelAndView();
         mav.addObject("loginUser",session.getAttribute("loginUser"));
         UserForm userForm = new UserForm();
-        mav.addObject("userForm", userForm);
+        mav.addObject("UserForm", userForm);
         mav.setViewName("/signup");
         return mav;
     }
@@ -112,7 +118,7 @@ public class TopController {
         if (result.hasErrors()) {
             ModelAndView mav = new ModelAndView();
             mav.addObject("loginUser",session.getAttribute("loginUser"));
-            mav.addObject("userForm", userForm);
+            mav.addObject("UserForm", userForm);
             mav.setViewName("/signup");
             return mav;
         }

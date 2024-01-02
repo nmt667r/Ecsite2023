@@ -8,27 +8,19 @@ import java.util.Date;
 
 @Getter
 @Setter
-public class UserForm extends FormValidationMessage.UserForm{
+public class UserForm{
     private Integer id;
 
-    @NotBlank(message = ACCOUNT_BLANK)
-    @Max(value = ACCOUNT_MAX_LENGTH, message= ACCOUNT_LENGTH_OVER)
-    @Min(value = ACCOUNT_MIN_LENGTH, message= ACCOUNT_LENGTH_UNDER)
+    @Size(min = 4, max = 20, message= "アカウント名は4~20文字で入力してください")
     private String account;
 
-    @NotBlank(message = NAME_BLANK)
-    @Max(value = NAME_MAX_LENGTH, message = NAME_LENGTH_OVER)
-    @Min(value = NAME_MIN_LENGTH, message= NAME_LENGTH_UNDER)
+    @Size(min = 2, max = 20, message= "名前は2~20文字で入力してください")
     private String name;
 
-    @NotBlank(message = PASSWORD_BLANK)
-    @Max(value = PASSWORD_MAX_LENGTH, message = PASSWORD_LENGTH_OVER)
-    @Min(value = PASSWORD_MIN_LENGTH, message= PASSWORD_LENGTH_UNDER)
+    @Size(min = 8, max = 20, message= "パスワードは8~20文字で入力してください")
     private String password;
 
-    @NotBlank(message = CONFIRM_PASSWORD_BLANK)
-    @Max(value = CONFIRM_PASSWORD_MAX_LENGTH, message = CONFIRM_PASSWORD_LENGTH_OVER)
-    @Min(value = CONFIRM_PASSWORD_MIN_LENGTH, message= CONFIRM_PASSWORD_LENGTH_UNDER)
+    @Size(min = 8, max = 20, message= "確認用パスワードは8~20文字で入力してください")
     private String passwordConfirm;
 
     private Integer is_stopped;
