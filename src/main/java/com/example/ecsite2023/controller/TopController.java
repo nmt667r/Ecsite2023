@@ -28,6 +28,7 @@ public class TopController {
     @GetMapping
     public ModelAndView viewTop() {
         ModelAndView mav = new ModelAndView();
+        mav.addObject("loginUser",session.getAttribute("loginUser"));
         List<ItemForm> items = itemService.findAllItems();
         mav.addObject("items", items);
         mav.setViewName("/top");
@@ -37,6 +38,7 @@ public class TopController {
     @GetMapping("/itemAdd")
     public ModelAndView viewItem() {
         ModelAndView mav = new ModelAndView();
+        mav.addObject("loginUser",session.getAttribute("loginUser"));
         ItemForm itemForm = new ItemForm();
         mav.addObject("itemForm", itemForm);
         mav.setViewName("/itemAdd");
@@ -54,6 +56,7 @@ public class TopController {
     @GetMapping("/item/{id}")
     public ModelAndView viewItemDetail(@PathVariable Integer id) {
         ModelAndView mav = new ModelAndView();
+        mav.addObject("loginUser",session.getAttribute("loginUser"));
         ItemForm itemForm = itemService.findItemById(id).get(0);
         CartForm cartForm = new CartForm();
         cartForm.setItemId(itemForm.getId());
@@ -67,6 +70,7 @@ public class TopController {
     @GetMapping("/login")
     public ModelAndView viewLogin() {
         ModelAndView mav = new ModelAndView();
+        mav.addObject("loginUser",session.getAttribute("loginUser"));
         UserForm userForm = new UserForm();
         mav.addObject("userForm", userForm);
         mav.setViewName("/login");
@@ -95,6 +99,7 @@ public class TopController {
     @GetMapping("/signup")
     public ModelAndView viewSignup() {
         ModelAndView mav = new ModelAndView();
+        mav.addObject("loginUser",session.getAttribute("loginUser"));
         UserForm userForm = new UserForm();
         mav.addObject("userForm", userForm);
         mav.setViewName("/signup");
@@ -120,6 +125,7 @@ public class TopController {
     @GetMapping("/editCart")
     public ModelAndView viewCart() {
         ModelAndView mav = new ModelAndView();
+        mav.addObject("loginUser",session.getAttribute("loginUser"));
         Integer userId = ((User) session.getAttribute("loginUser")).getId();
         List<CartForm> cartForm = cartService.findCartByUserId(userId);
         mav.addObject("cartForm", cartForm);

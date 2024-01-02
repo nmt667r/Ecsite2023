@@ -12,10 +12,15 @@
     </div>
     <div class="navi">
         <span><a href="/">トップ</a></span>
-        <span><a href="login">ログイン</a></span>
-        <span><a href="itemAdd">商品追加</a></span>
-        <span><a href="logout">ログアウト</a></span>
-        <span><a href="editCart">カート編集</a></span>
+        <span th:if="${loginUser} == null">
+            <span><a href="login">ログイン</a></span>
+            <span><a href="signup">ユーザー登録</a></span>
+        </span>
+        <span th:unless="${loginUser} == null">
+            <span><a href="itemAdd">商品追加</a></span>
+            <span><a href="editCart">カート編集</a></span>
+            <span><a href="logout">ログアウト</a></span>
+        </span>
     </div>
 </header>
 <main>
