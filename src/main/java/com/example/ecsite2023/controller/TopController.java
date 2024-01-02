@@ -10,6 +10,7 @@ import com.example.ecsite2023.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -107,10 +108,18 @@ public class TopController {
     }
 
     @PostMapping("/signup")
-    public ModelAndView executeSignup(@ModelAttribute("UserForm") UserForm UserForm, BindingResult result) {
-        UserForm.setCreateDate(new Date());
-        UserForm.setUpdateDate(new Date());
-        userService.createUser(UserForm);
+    public ModelAndView executeSignup(@ModelAttribute("UserForm") @Validated UserForm userForm, BindingResult result) {
+        if (result.hasErrors()) {
+            ModelAndView mav = new ModelAndView();
+            mav.addObject("loginUser",session.getAttribute("loginUser"));
+            mav.addObject("userForm", userForm);
+            mav.setViewName("/signup");
+            return mav;
+        }
+
+        userForm.setCreateDate(new Date());
+        userForm.setUpdateDate(new Date());
+        userService.createUser(userForm);
         return new ModelAndView("redirect:/");
     }
 
