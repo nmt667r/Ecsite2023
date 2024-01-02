@@ -10,6 +10,7 @@ import com.example.ecsite2023.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -115,7 +116,20 @@ public class TopController {
 
     @PostMapping("/signup")
     public ModelAndView executeSignup(@ModelAttribute("UserForm") @Validated UserForm userForm, BindingResult result) {
+        if (!result.hasFieldErrors("password") && !result.hasFieldErrors("passwordConfirm")) {
+            if(!userForm.getPassword().equals(userForm.getPasswordConfirm())){
+                result.addError(new FieldError(result.getObjectName(), "password", null, false, null, null, "パスワードと確認用パスワードが一致しません"));
+            }
+        }
+
         if (result.hasErrors()) {
+            ModelAndView mav = new ModelAndView();
+            mav.addObject("loginUser",session.getAttribute("loginUser"));
+            mav.addObject("UserForm", userForm);
+            mav.setViewName("/signup");
+            return mav;
+        } else if (!userForm.getPassword().equals(userForm.getPasswordConfirm())) {
+
             ModelAndView mav = new ModelAndView();
             mav.addObject("loginUser",session.getAttribute("loginUser"));
             mav.addObject("UserForm", userForm);

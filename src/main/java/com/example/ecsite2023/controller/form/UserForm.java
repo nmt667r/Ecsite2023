@@ -26,4 +26,6 @@ public class UserForm{
     private Integer is_stopped;
     private Date createDate;
     private Date updateDate;
+
+
 }
