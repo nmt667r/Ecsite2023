@@ -25,11 +25,24 @@
 </header>
 <main>
     <form method="post" action="/signup" th:object="${userForm}">
-        <input type="text" th:field="*{account}">
-        <input type="text" th:field="*{name}">
-        <input type="password" th:field="*{password}">
-        <input type="password" th:field="*{passwordConfirm}">
-        <input type="submit" value="新規追加" />
+        <div>
+            <span>アカウント名</span>
+            <input type="text" th:field="*{account}">
+        </div>
+        <div>
+            <span>ユーザー名</span>
+            <input type="text" th:field="*{name}">
+        </div>
+        <div>
+            <span>パスワード</span>
+            <input type="password" th:field="*{password}">
+        </div>
+        <div>
+            <span>パスワード確認用</span>
+            <input type="password" th:field="*{passwordConfirm}"></div>
+        <div>
+            <input type="submit" value="新規追加" />
+        </div>
     </form>
 </main>
 </body>
