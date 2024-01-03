@@ -31,7 +31,7 @@ public class ItemService {
             Item result = results.get(i);
             Item.setId(result.getId());
             Item.setName(result.getName());
-            Item.setPrice(result.getPrice());
+            Item.setPrice(String.valueOf(result.getPrice()));
             Item.setImage(result.getImage());
             Item.setStatus(result.isStatus());
             Item.setCreateDate(result.getCreateDate());
@@ -51,7 +51,7 @@ public class ItemService {
         Item item = new Item();
         item.setId(itemForm.getId());
         item.setName(itemForm.getName());
-        item.setPrice(itemForm.getPrice());
+        item.setPrice(Integer.parseInt(itemForm.getPrice()));
         item.setImage(itemForm.getImage());
         item.setStatus(itemForm.isStatus());
         item.setCreateDate(itemForm.getCreateDate());
