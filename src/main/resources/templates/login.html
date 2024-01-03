@@ -26,13 +26,13 @@
 <main>
     <form method="post" action="/login" th:object="${UserForm}">
         <div>
-            <span>アカウント名</span>
             <div th:if="${#fields.hasErrors('account')}" th:errors="*{account}"></div>
+            <span>アカウント名：</span>
             <input type="text" th:field="*{account}">
         </div>
         <div>
-            <span>パスワード</span>
             <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+            <span>パスワード：</span>
             <input type="password" th:field="*{password}">
         </div>
         <div>
