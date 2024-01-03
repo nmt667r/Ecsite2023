@@ -10,6 +10,8 @@ import com.example.ecsite2023.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -40,13 +42,21 @@ public class TopController {
         ModelAndView mav = new ModelAndView();
         mav.addObject("loginUser",session.getAttribute("loginUser"));
         ItemForm itemForm = new ItemForm();
-        mav.addObject("itemForm", itemForm);
+        mav.addObject("ItemForm", itemForm);
         mav.setViewName("/itemAdd");
         return mav;
     }
 
     @PostMapping("/itemAdd")
-    public ModelAndView addItem(@ModelAttribute("itemForm") ItemForm itemForm, BindingResult result) {
+    public ModelAndView addItem(@ModelAttribute("ItemForm") @Validated ItemForm itemForm, BindingResult result) {
+        if (result.hasErrors()) {
+            ModelAndView mav = new ModelAndView();
+            mav.addObject("loginUser",session.getAttribute("loginUser"));
+            mav.addObject("ItemForm", itemForm);
+            mav.setViewName("/itemAdd");
+            return mav;
+        }
+
         itemForm.setCreateDate(new Date());
         itemForm.setUpdateDate(new Date());
         itemService.saveItem(itemForm);
@@ -61,7 +71,7 @@ public class TopController {
         CartForm cartForm = new CartForm();
         cartForm.setItemId(itemForm.getId());
         cartForm.setName(itemForm.getName());
-        cartForm.setPrice(itemForm.getPrice());
+        cartForm.setPrice(Integer.parseInt(itemForm.getPrice()));
         mav.addObject("cartForm", cartForm);
         mav.setViewName("/itemAbout");
         return mav;
@@ -72,17 +82,23 @@ public class TopController {
         ModelAndView mav = new ModelAndView();
         mav.addObject("loginUser",session.getAttribute("loginUser"));
         UserForm userForm = new UserForm();
-        mav.addObject("userForm", userForm);
+        mav.addObject("UserForm", userForm);
         mav.setViewName("/login");
         return mav;
     }
 
     @PostMapping("/login")
-    public ModelAndView executeLogin(@ModelAttribute("UserForm") UserForm userForm, BindingResult result) {
+    public ModelAndView executeLogin(@ModelAttribute("UserForm") @Validated UserForm userForm, BindingResult result) {
         ModelAndView mav = new ModelAndView();
+        if (result.hasErrors()) {
+            mav.addObject("loginUser",session.getAttribute("loginUser"));
+            mav.addObject("UserForm", userForm);
+            mav.setViewName("/login");
+            return mav;
+        }
         List<User> findUsers = userService.findUser(userForm);
         if (findUsers.size() != 1) {
-            mav.addObject("userForm", userForm);
+            mav.addObject("UserForm", userForm);
             mav.setViewName("/login");
             return mav;
         }
@@ -101,16 +117,37 @@ public class TopController {
         ModelAndView mav = new ModelAndView();
         mav.addObject("loginUser",session.getAttribute("loginUser"));
         UserForm userForm = new UserForm();
-        mav.addObject("userForm", userForm);
+        mav.addObject("UserForm", userForm);
         mav.setViewName("/signup");
         return mav;
     }
 
     @PostMapping("/signup")
-    public ModelAndView executeSignup(@ModelAttribute("UserForm") UserForm UserForm, BindingResult result) {
-        UserForm.setCreateDate(new Date());
-        UserForm.setUpdateDate(new Date());
-        userService.createUser(UserForm);
+    public ModelAndView executeSignup(@ModelAttribute("UserForm") @Validated UserForm userForm, BindingResult result) {
+        if (!result.hasFieldErrors("password") && !result.hasFieldErrors("passwordConfirm")) {
+            if(!userForm.getPassword().equals(userForm.getPasswordConfirm())){
+                result.addError(new FieldError(result.getObjectName(), "password", null, false, null, null, "パスワードと確認用パスワードが一致しません"));
+            }
+        }
+
+        if (result.hasErrors()) {
+            ModelAndView mav = new ModelAndView();
+            mav.addObject("loginUser",session.getAttribute("loginUser"));
+            mav.addObject("UserForm", userForm);
+            mav.setViewName("/signup");
+            return mav;
+        } else if (!userForm.getPassword().equals(userForm.getPasswordConfirm())) {
+
+            ModelAndView mav = new ModelAndView();
+            mav.addObject("loginUser",session.getAttribute("loginUser"));
+            mav.addObject("UserForm", userForm);
+            mav.setViewName("/signup");
+            return mav;
+        }
+
+        userForm.setCreateDate(new Date());
+        userForm.setUpdateDate(new Date());
+        userService.createUser(userForm);
         return new ModelAndView("redirect:/");
     }
 
