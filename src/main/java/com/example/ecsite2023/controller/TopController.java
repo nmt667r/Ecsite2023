@@ -42,13 +42,21 @@ public class TopController {
         ModelAndView mav = new ModelAndView();
         mav.addObject("loginUser",session.getAttribute("loginUser"));
         ItemForm itemForm = new ItemForm();
-        mav.addObject("itemForm", itemForm);
+        mav.addObject("ItemForm", itemForm);
         mav.setViewName("/itemAdd");
         return mav;
     }
 
     @PostMapping("/itemAdd")
-    public ModelAndView addItem(@ModelAttribute("itemForm") ItemForm itemForm, BindingResult result) {
+    public ModelAndView addItem(@ModelAttribute("ItemForm") @Validated ItemForm itemForm, BindingResult result) {
+        if (result.hasErrors()) {
+            ModelAndView mav = new ModelAndView();
+            mav.addObject("loginUser",session.getAttribute("loginUser"));
+            mav.addObject("ItemForm", itemForm);
+            mav.setViewName("/itemAdd");
+            return mav;
+        }
+
         itemForm.setCreateDate(new Date());
         itemForm.setUpdateDate(new Date());
         itemService.saveItem(itemForm);
@@ -63,7 +71,7 @@ public class TopController {
         CartForm cartForm = new CartForm();
         cartForm.setItemId(itemForm.getId());
         cartForm.setName(itemForm.getName());
-        cartForm.setPrice(itemForm.getPrice());
+        cartForm.setPrice(Integer.parseInt(itemForm.getPrice()));
         mav.addObject("cartForm", cartForm);
         mav.setViewName("/itemAbout");
         return mav;
