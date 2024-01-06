@@ -41,7 +41,7 @@
                 <td><a th:href="@{/item/{id}(id=${item.id})}"><span th:text="${item.id}"></span></a></td>
                 <td th:text="${item.name}"></td>
                 <td th:text="${item.price}"></td>
-                <td th:text="${item.image}"></td>
+                <td th:text="${item.image}"><img th:src="'/image/' + ${item.image}" alt=""></td>
                 <td th:text="${item.status}"></td>
                 <td th:text="${item.createDate}"></td>
                 <td th:text="${item.updateDate}"></td>

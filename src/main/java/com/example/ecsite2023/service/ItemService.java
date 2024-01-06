@@ -6,6 +6,7 @@ import com.example.ecsite2023.repository.entity.Item;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +33,7 @@ public class ItemService {
             Item.setId(result.getId());
             Item.setName(result.getName());
             Item.setPrice(String.valueOf(result.getPrice()));
-            Item.setImage(result.getImage());
+            //Item.setImage((result.getImage());
             Item.setStatus(result.isStatus());
             Item.setCreateDate(result.getCreateDate());
             Item.setUpdateDate(result.getUpdateDate());
@@ -47,15 +48,21 @@ public class ItemService {
         itemRepository.save(saveItem);
     }
 
+    public void saveItem(ItemForm itemForm, String image) {
+        Item saveItem = setItemEntity(itemForm);
+        saveItem.setImage(image);
+        itemRepository.save(saveItem);
+    }
+
     private Item setItemEntity(ItemForm itemForm) {
         Item item = new Item();
         item.setId(itemForm.getId());
         item.setName(itemForm.getName());
         item.setPrice(Integer.parseInt(itemForm.getPrice()));
-        item.setImage(itemForm.getImage());
         item.setStatus(itemForm.isStatus());
         item.setCreateDate(itemForm.getCreateDate());
         item.setUpdateDate(itemForm.getUpdateDate());
+
         return item;
     }
 }

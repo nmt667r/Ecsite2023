@@ -2,6 +2,7 @@ package com.example.ecsite2023.controller.form;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.Column;
 import javax.validation.constraints.Max;
@@ -21,7 +22,7 @@ public class ItemForm {
     @NotBlank(message = "金額を入力してください")
     @Pattern(regexp="^\\d{1,10}$", message="金額は1~10桁の数字で入力してください")
     private String price;
-    private String image;
+    private MultipartFile image;
     private boolean status;
     private Date createDate;
     private Date updateDate;
