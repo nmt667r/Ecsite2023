@@ -4,8 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.persistence.Column;
-import javax.validation.constraints.Max;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -22,7 +20,7 @@ public class ItemForm {
     @NotBlank(message = "金額を入力してください")
     @Pattern(regexp="^\\d{1,10}$", message="金額は1~10桁の数字で入力してください")
     private String price;
-    private MultipartFile image;
+    private String image;
     private boolean status;
     private Date createDate;
     private Date updateDate;

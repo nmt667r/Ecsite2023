@@ -9,7 +9,6 @@ import com.example.ecsite2023.service.ItemService;
 import com.example.ecsite2023.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
@@ -18,11 +17,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Date;
 import java.util.List;
 
@@ -64,20 +58,10 @@ public class TopController {
             mav.setViewName("/itemAdd");
             return mav;
         }
-        String fileName = file.getOriginalFilename();
-
-        Path filePath = Paths.get("C:/Users/tmrnc/IdeaProjects/ecsite2023/src/main/resources/static/image/" + fileName);
-
-        try {
-            Files.copy(file.getInputStream(), filePath);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
         itemForm.setCreateDate(new Date());
         itemForm.setUpdateDate(new Date());
-        itemService.saveItem(itemForm, fileName);
+        itemService.saveLocalImage("image/", file);
+        itemService.saveItem(itemForm, file);
         return new ModelAndView("redirect:/");
     }
 

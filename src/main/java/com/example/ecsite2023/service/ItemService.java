@@ -5,8 +5,13 @@ import com.example.ecsite2023.repository.ItemRepository;
 import com.example.ecsite2023.repository.entity.Item;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +38,7 @@ public class ItemService {
             Item.setId(result.getId());
             Item.setName(result.getName());
             Item.setPrice(String.valueOf(result.getPrice()));
-            //Item.setImage((result.getImage());
+            Item.setImage(result.getImage());
             Item.setStatus(result.isStatus());
             Item.setCreateDate(result.getCreateDate());
             Item.setUpdateDate(result.getUpdateDate());
@@ -48,9 +53,10 @@ public class ItemService {
         itemRepository.save(saveItem);
     }
 
-    public void saveItem(ItemForm itemForm, String image) {
+    public void saveItem(ItemForm itemForm, MultipartFile file) {
         Item saveItem = setItemEntity(itemForm);
-        saveItem.setImage(image);
+        saveItem.setImage(file.getOriginalFilename());
+
         itemRepository.save(saveItem);
     }
 
@@ -64,5 +70,16 @@ public class ItemService {
         item.setUpdateDate(itemForm.getUpdateDate());
 
         return item;
+    }
+
+    public void saveLocalImage(String path, MultipartFile file){
+        String fileName = file.getOriginalFilename();
+        Path filePath = Paths.get(path + fileName);
+
+        try {
+            Files.copy(file.getInputStream(), filePath);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
