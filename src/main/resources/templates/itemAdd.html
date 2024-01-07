@@ -24,7 +24,7 @@
     </div>
 </header>
 <main>
-    <form method="post" action="/itemAdd" th:object="${ItemForm}">
+    <form method="post" action="/itemAdd" th:object="${ItemForm}" enctype="multipart/form-data">
         <div>
             <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
             <span>アイテム名：</span>
@@ -34,6 +34,9 @@
             <div th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></div>
             <span>価格：</span>
             <input type="text" th:field="*{price}">
+        </div>
+        <div>
+            <input type="file" name="file" />
         </div>
         <div>
             <input type="submit" value="新規追加" />
