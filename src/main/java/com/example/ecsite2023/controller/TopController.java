@@ -13,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
@@ -48,7 +49,8 @@ public class TopController {
     }
 
     @PostMapping("/itemAdd")
-    public ModelAndView addItem(@ModelAttribute("ItemForm") @Validated ItemForm itemForm, BindingResult result) {
+    public ModelAndView addItem(@ModelAttribute("ItemForm") @Validated ItemForm itemForm, @RequestParam MultipartFile file, BindingResult result) {
+
         if (result.hasErrors()) {
             ModelAndView mav = new ModelAndView();
             mav.addObject("loginUser",session.getAttribute("loginUser"));
@@ -56,10 +58,10 @@ public class TopController {
             mav.setViewName("/itemAdd");
             return mav;
         }
-
         itemForm.setCreateDate(new Date());
         itemForm.setUpdateDate(new Date());
-        itemService.saveItem(itemForm);
+        itemService.saveLocalImage("image/", file);
+        itemService.saveItem(itemForm, file);
         return new ModelAndView("redirect:/");
     }
 

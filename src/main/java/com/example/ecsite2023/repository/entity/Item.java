@@ -2,6 +2,7 @@ package com.example.ecsite2023.repository.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.Date;
