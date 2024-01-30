@@ -100,6 +100,7 @@ public class TopController {
         }
         List<User> findUsers = userService.findUser(userForm);
         if (findUsers.size() != 1) {
+            result.addError(new FieldError(result.getObjectName(), "account", null, false, null, null, "アカウントとパスワードの組み合わせが不適切です"));
             mav.addObject("UserForm", userForm);
             mav.setViewName("/login");
             return mav;
